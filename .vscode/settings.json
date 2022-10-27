@@ -16,5 +16,6 @@
         "cmd": "autoflake.removeUnused"
       }
     ]
-  }
+  },
+  "python.linting.enabled": true
 }
