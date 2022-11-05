@@ -17,5 +17,8 @@
       }
     ]
   },
-  "python.linting.enabled": true
+  "python.linting.enabled": true,
+
+  // below ensures that python suggestions are loaded
+  "python.analysis.autoImportCompletions": true
 }
