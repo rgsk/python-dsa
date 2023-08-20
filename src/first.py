@@ -1,5 +1,7 @@
 import random
 
+from second import PI
+
 
 def returnNumber():
     if random.randint(0, 10) > 5:
@@ -8,3 +10,4 @@ def returnNumber():
 
 
 print(returnNumber())
+print(PI)

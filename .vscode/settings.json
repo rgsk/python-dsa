@@ -20,5 +20,9 @@
   "python.linting.enabled": true,
 
   // below ensures that python suggestions are loaded
-  "python.analysis.autoImportCompletions": true
+  "python.analysis.autoImportCompletions": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8"
+  },
+  "python.formatting.provider": "none"
 }
