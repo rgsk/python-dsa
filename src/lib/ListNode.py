@@ -80,3 +80,38 @@ def reverseList(head: Optional[ListNode]) -> Optional[ListNode]:
         prev = cur
         cur = next
     return prev
+
+
+INT_MAX = (2 ** 31)-1
+
+
+def mergeSort(head: Optional[ListNode]) -> Optional[ListNode]:
+    if head is None or head.next is None:
+        return head
+    slow = head
+    fast = head.next.next
+    while fast != None and fast.next != None:
+        slow = slow.next
+        fast = fast.next.next
+
+    mid = slow.next
+    slow.next = None
+    left = mergeSort(head)
+    right = mergeSort(mid)
+    ans = ListNode(-1)
+    temp = ans
+    while left != None or right != None:
+        n1 = left.val if left is not None else INT_MAX
+        n2 = right.val if right is not None else INT_MAX
+
+        if n1 < n2:
+            temp.next = left
+            if left is not None:
+                left = left.next
+        else:
+            temp.next = right
+            if right is not None:
+                right = right.next
+        if temp.next is not None:
+            temp = temp.next
+    return ans.next
