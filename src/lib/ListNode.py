@@ -6,6 +6,14 @@ class ListNode:
         self.val = val
         self.next = next
 
+    @property
+    def data(self):
+        return self.val
+
+    @data.setter
+    def data(self, new_val: int):
+        self.val = new_val
+
 
 def asList(l: Optional[ListNode]) -> List[int]:
     if l == None:
@@ -53,6 +61,21 @@ def at(head: Optional[ListNode], idx: int):
             raise Exception("index out of range")
         idx -= 1
     return temp
+
+
+def pop(head: Optional[ListNode], idx: int):
+    if not head:
+        return None
+    if idx == 0 or idx == -getLength(head):
+        return head.next
+    length = getLength(head)
+    if idx < 0:
+        idx = length + idx
+    if idx < 0 or idx >= length:
+        raise Exception("index out of range")
+    node = at(head, idx-1)
+    node.next = node.next.next
+    return head
 
 
 def equal(first: Optional[ListNode], second: Optional[ListNode]):
@@ -128,3 +151,15 @@ def indexOf(head: Optional[ListNode], node: Optional[ListNode]):
         idx += 1
         temp = temp.next
     return -1
+
+
+def getNodes(head: Optional[ListNode]):
+    ans = []
+    while head:
+        ans.append(head)
+        head = head.next
+    return ans
+
+
+class Node(ListNode):
+    pass
