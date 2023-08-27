@@ -115,3 +115,16 @@ def mergeSort(head: Optional[ListNode]) -> Optional[ListNode]:
         if temp.next is not None:
             temp = temp.next
     return ans.next
+
+
+def indexOf(head: Optional[ListNode], node: Optional[ListNode]):
+    if not node:
+        return -1
+    idx = 0
+    temp = head
+    while temp:
+        if node.val == temp.val:
+            return idx
+        idx += 1
+        temp = temp.next
+    return -1
