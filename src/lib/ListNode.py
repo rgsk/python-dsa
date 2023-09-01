@@ -163,3 +163,14 @@ def getNodes(head: Optional[ListNode]):
 
 class Node(ListNode):
     pass
+
+
+def copy(head: Optional[ListNode]):
+    dummy = ListNode(-1)
+    dummy_temp = dummy
+    temp = head
+    while temp:
+        dummy_temp.next = ListNode(temp.val)
+        dummy_temp = dummy_temp.next
+        temp = temp.next
+    return dummy.next
