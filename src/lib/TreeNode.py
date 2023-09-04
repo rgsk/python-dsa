@@ -85,3 +85,21 @@ def levelOrder(root: Optional[TreeNode]) -> List[List[int]]:
             stack.append((last.right, idx + 1))
             stack.append((last.left, idx + 1))
     return ans
+
+
+def levelOrder2(root: Optional[TreeNode]) -> List[List[int]]:
+    current_level_nodes = [root]
+    ans: List[List[int]] = []
+    while current_level_nodes:
+        next_level_nodes = []
+        row: List[int] = []
+
+        for node in current_level_nodes:
+            if node:
+                row.append(node.val)
+                next_level_nodes.append(node.left)
+                next_level_nodes.append(node.right)
+        if row:
+            ans.append(row)
+        current_level_nodes = next_level_nodes
+    return ans
