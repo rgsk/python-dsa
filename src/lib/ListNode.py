@@ -129,8 +129,8 @@ def mergeSort(head: Optional[ListNode]) -> Optional[ListNode]:
 
         if n1 < n2:
             temp.next = left
-            if left is not None:
-                left = left.next
+            assert isinstance(left, ListNode)  # alternative check
+            left = left.next
         else:
             temp.next = right
             if right is not None:
