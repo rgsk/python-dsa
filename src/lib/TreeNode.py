@@ -51,3 +51,37 @@ def getList(root: Optional[TreeNode]):
     while i >= 0 and ans[i] == None:
         i -= 1
     return ans[0: i + 1]
+
+
+INT_MAX = (2 ** 31)-1
+INT_MIN = -(2 ** 31)
+
+
+def levelOrderWithNoneNodes(root: Optional[TreeNode]) -> List[List[int]]:
+    stack = [(root, 0)]
+    ans: List[List[int]] = []
+    while stack:
+        last, idx = stack.pop()
+        if idx == len(ans):
+            ans.append([])
+        if last:
+            ans[idx].append(last.val)
+            stack.append((last.right, idx + 1))
+            stack.append((last.left, idx + 1))
+        else:
+            ans[idx].append(INT_MIN)
+    return ans
+
+
+def levelOrder(root: Optional[TreeNode]) -> List[List[int]]:
+    stack = [(root, 0)]
+    ans: List[List[int]] = []
+    while stack:
+        last, idx = stack.pop()
+        if last:
+            if idx == len(ans):
+                ans.append([])
+            ans[idx].append(last.val)
+            stack.append((last.right, idx + 1))
+            stack.append((last.left, idx + 1))
+    return ans
