@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/same-tree/
+from collections import deque
 from typing import List, Optional
 
 
@@ -8,8 +9,33 @@ class TreeNode:
         self.left = left
         self.right = right
 
+    @property
+    def data(self):
+        return self.val
+
+    @data.setter
+    def data(self, new_val: int):
+        self.val = new_val
+
+    @property
+    def value(self):
+        return self.val
+
+    @data.setter
+    def value(self, new_val: int):
+        self.val = new_val
+
     def __repr__(self) -> str:
         return str(getList(self))
+
+
+def getHeight(root: TreeNode):
+    if root is None:
+        return 0
+    else:
+        left_height = getHeight(root.left)
+        right_height = getHeight(root.right)
+        return max(left_height, right_height) + 1
 
 
 def formTree(values: list[int | None]):
@@ -102,4 +128,24 @@ def levelOrder2(root: Optional[TreeNode]) -> List[List[int]]:
         if row:
             ans.append(row)
         current_level_nodes = next_level_nodes
+    return ans
+
+
+def levelOrder3(root: Optional[TreeNode]) -> List[List[int]]:
+    ans: List[List[int]] = []
+    queue = deque([root, None])
+    row: List[int] = []
+    while queue:
+        last = queue.popleft()
+        if last:
+            row.append(last.val)
+            if last.left:
+                queue.append(last.left)
+            if last.right:
+                queue.append(last.right)
+        else:
+            ans.append(row)
+            row = []
+            if queue:
+                queue.append(None)
     return ans
