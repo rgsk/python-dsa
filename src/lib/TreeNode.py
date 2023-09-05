@@ -38,6 +38,17 @@ def getHeight(root: TreeNode):
         return max(left_height, right_height) + 1
 
 
+def printHorizontal(root):
+    def print_tree(root, level):
+        if root is not None:
+            print_tree(root.right, level + 1)
+            print("    " * (level - 1) + "|---" + str(root.value))
+            print_tree(root.left, level + 1)
+
+    height = getHeight(root)
+    print_tree(root, height)
+
+
 def formTree(values: list[int | None]):
     if not values:
         return None
