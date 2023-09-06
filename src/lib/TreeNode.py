@@ -152,18 +152,24 @@ INT_MIN = -(2 ** 31)
 
 
 def levelOrderWithNoneNodes(root: Optional[TreeNode]) -> List[List[int]]:
-    stack = [(root, 0)]
+    store = [root]
     ans: List[List[int]] = []
-    while stack:
-        last, idx = stack.pop()
-        if idx == len(ans):
-            ans.append([])
-        if last:
-            ans[idx].append(last.val)
-            stack.append((last.right, idx + 1))
-            stack.append((last.left, idx + 1))
-        else:
-            ans[idx].append(INT_MIN)
+    while store:
+        temp_store: List[Optional[TreeNode]] = []
+        row = []
+        anyNodeExists = any(store)
+        for node in store:
+            if node:
+                row.append(node.val)
+                temp_store.append(node.left)
+                temp_store.append(node.right)
+            else:
+                row.append(INT_MIN)
+                if anyNodeExists:
+                    temp_store.append(None)
+                    temp_store.append(None)
+        ans.append(row)
+        store = temp_store
     return ans
 
 
@@ -255,3 +261,12 @@ def getLeafs(root: Optional[TreeNode]):
                 helper(node.right)
     helper(root)
     return ans
+
+
+def findNode(root: Optional[TreeNode], val: int):
+    def helper(node: Optional[TreeNode]):
+        if node:
+            if node.val == val:
+                return node
+            return helper(node.left) or helper(node.right)
+    return helper(root)
