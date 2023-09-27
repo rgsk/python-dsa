@@ -154,11 +154,21 @@ def indexOf(head: Optional[ListNode], node: Optional[ListNode]):
 
 
 def getNodes(head: Optional[ListNode]):
-    ans = []
+    nodes = []
     while head:
-        ans.append(head)
+        nodes.append(head)
         head = head.next
-    return ans
+    return nodes
+
+
+def connectNodes(nodes: List[ListNode]):
+    dummy = ListNode()
+    temp = dummy
+    for node in nodes:
+        temp.next = node
+        temp = temp.next
+    temp.next = None
+    return dummy.next
 
 
 class Node(ListNode):
