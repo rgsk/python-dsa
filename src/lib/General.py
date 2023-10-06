@@ -23,3 +23,21 @@ def circular_monotonic(nums: List[int]):
             ans[i] = st[-1] if st else -1
         st.append(nums[i % n])
     return ans
+
+
+def nextPermutation(elems):
+    lastRise = -1
+    n = len(elems)
+    for i in range(n - 1):
+        if elems[i+1] > elems[i]:
+            lastRise = i
+    if lastRise == -1:
+        return list(reversed(elems))
+    firstElementFromLastGreaterThanLastRise = -1
+    for i in range(n - 1, lastRise, -1):
+        if elems[i] > elems[lastRise]:
+            firstElementFromLastGreaterThanLastRise = i
+            break
+    elems[lastRise], elems[firstElementFromLastGreaterThanLastRise] = elems[firstElementFromLastGreaterThanLastRise], elems[lastRise]
+    elems[lastRise + 1:] = list(reversed(elems[lastRise + 1:]))
+    return elems
