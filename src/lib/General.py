@@ -41,3 +41,10 @@ def nextPermutation(elems):
     elems[lastRise], elems[firstElementFromLastGreaterThanLastRise] = elems[firstElementFromLastGreaterThanLastRise], elems[lastRise]
     elems[lastRise + 1:] = list(reversed(elems[lastRise + 1:]))
     return elems
+
+
+def getAdjListFromEdges(edges, V):
+    adjList = [[] for _ in range(V)]
+    for edge in edges:
+        adjList[edge[0]].append(edge[1])
+    return adjList
