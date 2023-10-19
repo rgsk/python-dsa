@@ -48,3 +48,11 @@ def getAdjListFromEdges(edges, V):
     for edge in edges:
         adjList[edge[0]].append(edge[1])
     return adjList
+
+
+def getCharacterIndex(c):
+    return ord(c) - 97
+
+
+def getCharacterFromIndex(i):
+    return chr(i + 97)
