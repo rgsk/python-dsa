@@ -270,3 +270,24 @@ def findNode(root: Optional[TreeNode], val: int):
                 return node
             return helper(node.left) or helper(node.right)
     return helper(root)
+
+
+def createTreeFromInorder(inorderTraversal, left, right):
+    if left <= right:
+        mid = (left + right) // 2
+        node = TreeNode(inorderTraversal[mid])
+        node.left = createTreeFromInorder(inorderTraversal, left, mid - 1)
+        node.right = createTreeFromInorder(inorderTraversal, mid + 1, right)
+        return node
+
+
+def getInorderTraversal(root: TreeNode):
+    values = []
+
+    def inorder(root: Optional[TreeNode]):
+        if root:
+            inorder(root.left)
+            values.append(root.val)
+            inorder(root.right)
+    inorder(root)
+    return values
