@@ -18,6 +18,14 @@ class TreeNode:
         self.val = new_val
 
     @property
+    def key(self):
+        return self.val
+
+    @data.setter
+    def key(self, new_val: int):
+        self.val = new_val
+
+    @property
     def value(self):
         return self.val
 
