@@ -117,6 +117,8 @@ def printHorizontal(root):
 def formTree(values: list[int | None]):
     if not values:
         return None
+    if values[0] is None:
+        return None
     root = TreeNode(values[0])
     queue: List[Optional[TreeNode]] = [root]
     i = 1
