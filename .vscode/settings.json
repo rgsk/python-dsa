@@ -2,9 +2,7 @@
   // below is required to show red squiggles by mypy linter
   "python.linting.mypyEnabled": true,
   "editor.codeActionsOnSave": {
-    // below reorders the import statements
-    // for eg - lib imports before local imports
-    "source.organizeImports": true
+    "source.organizeImports": "explicit"
   },
   "saveAndRunExt": {
     // below triggers the autoflake extension to remove unused imports
