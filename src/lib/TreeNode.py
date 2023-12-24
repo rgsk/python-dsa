@@ -301,3 +301,27 @@ def getInorderTraversal(root: TreeNode):
             inorder(root.right)
     inorder(root)
     return values
+
+
+def getPreorderTraversal(root: TreeNode):
+    values = []
+
+    def preorder(root: Optional[TreeNode]):
+        if root:
+            values.append(root.val)
+            preorder(root.left)
+            preorder(root.right)
+    preorder(root)
+    return values
+
+
+def getPostorderTraversal(root: TreeNode):
+    values = []
+
+    def postorder(root: Optional[TreeNode]):
+        if root:
+            postorder(root.left)
+            postorder(root.right)
+            values.append(root.val)
+    postorder(root)
+    return values
