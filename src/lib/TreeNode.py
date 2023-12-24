@@ -347,3 +347,14 @@ class BSTIterator:
             self.stack.append(temp)
             temp = temp.left
         return x.val
+
+
+# that's a nice trick to use yield for getting the next value in inorder
+def tree_iter(root):
+    if not root:
+        return
+    for val in tree_iter(root.left):
+        yield val
+    yield root.val
+    for val in tree_iter(root.right):
+        yield val
