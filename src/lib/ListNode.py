@@ -30,7 +30,7 @@ def asList(l: Optional[ListNode]) -> List[int]:
 def makeList(elems: List[int]) -> Optional[ListNode]:
     if not elems:
         return None
-    l = ListNode()
+    l = ListNode(-1)
     t = l
     for v in elems:
         t.next = ListNode(v)
