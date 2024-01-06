@@ -4,11 +4,14 @@ import os
 import sys
 
 if os.getenv("ONLINE_JUDGE") is not None:
-    # For getting input from input.txt file
-    sys.stdin = open('input.txt', 'r')
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    input_file_path = os.path.join(script_directory, 'input.txt')
+    sys.stdin = open(input_file_path, 'r')
+    output_file_path = os.path.join(script_directory, 'output.txt')
+    sys.stdout = open(output_file_path, 'w')
 
-    # Printing the Output to output.txt file
-    sys.stdout = open('output.txt', 'w')
+
+# Greedy
 
 
 def solve(s: str):
