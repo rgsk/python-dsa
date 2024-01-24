@@ -171,6 +171,17 @@ def connectNodes(nodes: List[ListNode]):
     return dummy.next
 
 
+def middleNode(head: Optional[ListNode]) -> Optional[ListNode]:
+    slow = head
+    fast = head
+    while fast and fast.next:
+        fast = fast.next.next
+        assert slow is not None
+        slow = slow.next
+
+    return slow
+
+
 class Node(ListNode):
     pass
 
