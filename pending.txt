@@ -1,6 +1,9 @@
 K-th Permutation.ipynb
 https://www.interviewbit.com/problems/k-th-permutation/
 
+Triplets with Sum between given range.ipynb
+https://www.interviewbit.com/problems/triplets-with-sum-between-given-range/
+
 
 
 PriorityQueue raw implementation
