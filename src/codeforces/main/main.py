@@ -2,6 +2,7 @@
 
 import os
 import sys
+from math import ceil
 
 if os.getenv("ONLINE_JUDGE") is not None:
     script_directory = os.path.dirname(os.path.realpath(__file__))
@@ -14,6 +15,8 @@ if os.getenv("ONLINE_JUDGE") is not None:
     sys.stdout = open(output_file_path, 'w')
 
 for tc in range(int(input())):
-    a, b, c = map(int, input().split())
-    print(1 if a < c else -1, end=" ")
-    print(b if c < a * b else -1)
+    n, x = [int(v) for v in input().split()]
+    elements = [int(v) for v in input().split()]
+    maximum = sum([ceil(v / x) for v in elements])
+    minimum = ceil(sum(elements) / x)
+    print(f'{minimum} {maximum}')
