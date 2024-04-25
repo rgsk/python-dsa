@@ -2,6 +2,7 @@
 
 import os
 import sys
+from math import ceil
 
 if os.getenv("ONLINE_JUDGE") is not None:
     script_directory = os.path.dirname(os.path.realpath(__file__))
@@ -13,14 +14,17 @@ if os.getenv("ONLINE_JUDGE") is not None:
     output_file_path = os.path.join(script_directory, 'output.txt')
     sys.stdout = open(output_file_path, 'w')
 
-totalCases = int(input())
+t = int(input())
 
-
-while totalCases > 0:
-    a, b, c = [int(v) for v in input().split()]
-    total = a + 2 * b + 3 * c
-    if total % 2 == 0:
-        print(0)
-    else:
-        print(1)
-    totalCases -= 1
+while t > 0:
+    n = int(input())
+    values = [int(v) for v in input().split()]
+    values.sort()
+    median_idx = ceil(n/2) - 1
+    ops = 1
+    i = median_idx + 1
+    while i < n and values[i] == values[median_idx]:
+        i += 1
+        ops += 1
+    print(ops)
+    t -= 1
