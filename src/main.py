@@ -1,8 +1,5 @@
-# export ONLINE_JUDGE=true
-
 import os
 import sys
-from math import ceil
 
 if os.getenv("ONLINE_JUDGE") is not None:
     script_directory = os.path.dirname(os.path.realpath(__file__))
@@ -14,17 +11,36 @@ if os.getenv("ONLINE_JUDGE") is not None:
     output_file_path = os.path.join(script_directory, 'output.txt')
     sys.stdout = open(output_file_path, 'w')
 
-t = int(input())
+MOD = 1000000007
 
-while t > 0:
+
+def main():
     n = int(input())
-    values = [int(v) for v in input().split()]
-    values.sort()
-    median_idx = ceil(n/2) - 1
-    ops = 1
-    i = median_idx + 1
-    while i < n and values[i] == values[median_idx]:
-        i += 1
-        ops += 1
-    print(ops)
-    t -= 1
+    total = (n * (n + 1)) // 2
+
+    if total % 2 == 0:
+        halfSum = total // 2
+        dp = [0] * (halfSum + 1)
+
+        for value in range(n + 1, 0, -1):
+            prev = dp[:]
+            for remaining in range(halfSum + 1):
+                if value == n + 1:
+                    if remaining == 0:
+                        dp[remaining] = 1
+                    else:
+                        dp[remaining] = 0
+                else:
+                    if remaining >= value:
+                        dp[remaining] = (
+                            prev[remaining] +
+                            prev[remaining - value]
+                        ) % MOD
+
+        res = dp[halfSum]
+        print((res * pow(2, MOD - 2, MOD)) % MOD)  # Using modular inverse of 2
+    else:
+        print(0)
+
+
+main()
