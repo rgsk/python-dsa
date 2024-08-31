@@ -12,7 +12,12 @@ if os.path.exists(os.path.join(script_directory, 'input.txt')):
 
 def main():
     n = int(input())
-    print(2 ** n % (10 ** 9 + 7))
+    count = 0
+    i = 5
+    while n // i > 0:
+        count += n // i
+        i *= 5
+    print(count)
 
 
 main()
