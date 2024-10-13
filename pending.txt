@@ -12,3 +12,5 @@ PriorityQueue raw implementation
 Red Black Trees
 
 Fenwick Tree
+
+https://leetcode.com/problems/sum-multiples/solutions/3450363/javascript-100-time-o-1-time-o-1-space-math/
