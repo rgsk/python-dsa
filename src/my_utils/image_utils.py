@@ -8,7 +8,6 @@ from openai import OpenAI
 load_dotenv()
 
 client = OpenAI()
-print("OpenAI API Key:", os.getenv("OPENAI_API_KEY"))
 
 
 def encode_image(image_path):
