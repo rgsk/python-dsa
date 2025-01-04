@@ -1,5 +1,7 @@
 from math import gcd
 
+import numpy as np
+
 
 def reduce_fraction(numerator, denominator):
     """
@@ -38,3 +40,19 @@ def variance(numbers):
 
 def unbiased_variance(numbers):
     return (squared_mean(numbers) - mean(numbers)**2) / (len(numbers) - 1) * len(numbers)
+
+
+def mean_deviation_form(numbers):
+    mean_value = mean(numbers)
+    return [x - mean_value for x in numbers]
+
+
+def transpose(matrix):
+    return [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))]
+
+
+def covariance_matrix(matrix):
+    mean_deviation_value = [mean_deviation_form(row) for row in matrix]
+    transposed_mean_deviation_value = transpose(mean_deviation_value)
+    b_b_t = np.matmul(mean_deviation_value, transposed_mean_deviation_value)
+    return b_b_t
