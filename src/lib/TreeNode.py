@@ -184,16 +184,20 @@ def levelOrderWithNoneNodes(root: Optional[TreeNode]) -> List[List[int]]:
 
 
 def levelOrder(root: Optional[TreeNode]) -> List[List[int]]:
-    stack = [(root, 0)]
+    q: deque[TreeNode] = deque()
+    if (root):
+        q.append(root)
     ans: List[List[int]] = []
-    while stack:
-        last, idx = stack.pop()
-        if last:
-            if idx == len(ans):
-                ans.append([])
-            ans[idx].append(last.val)
-            stack.append((last.right, idx + 1))
-            stack.append((last.left, idx + 1))
+    while q:
+        row = []
+        for _ in range(len(q)):
+            node = q.popleft()
+            row.append(node.val)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+        ans.append(row)
     return ans
 
 
