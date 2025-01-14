@@ -92,3 +92,9 @@ def triangle_area(x1, y1, x2, y2, x3, y3):
     return abs(x1*(y2 - y3) +
                x2*(y3 - y1) +
                x3*(y1 - y2)) / 2.0
+
+
+def projxS(A, x):
+    A = np.array(A)
+    x = np.array(x)
+    return A @ np.linalg.inv(np.transpose(A) @ A) @ np.transpose(A) @ x
