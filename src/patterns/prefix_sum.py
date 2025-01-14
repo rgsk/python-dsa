@@ -19,3 +19,14 @@ def main():
 
 
 main()
+
+
+n = len(nums)
+suffix_sum = [0 for _ in range(n + 1)]
+for i in range(n - 1, -1, -1):
+    suffix_sum[i] = nums[i] + suffix_sum[i + 1]
+
+
+def get_suffix_sum(i, j):
+    # j exclusive
+    return suffix_sum[i] - suffix_sum[j]

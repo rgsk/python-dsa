@@ -56,3 +56,29 @@ def covariance_matrix(matrix):
     transposed_mean_deviation_value = transpose(mean_deviation_value)
     b_b_t = np.matmul(mean_deviation_value, transposed_mean_deviation_value)
     return b_b_t
+
+
+def variance_x_fx(x, fx):
+    n = len(x)
+    ex2 = sum([x[i]**2 * fx[i] for i in range(n)])
+    ex = sum([x[i] * fx[i] for i in range(n)])
+    print(ex)
+    return ex2 - ex**2
+
+
+def cumulative(numbers):
+    val = 0
+    result = []
+    for v in numbers:
+        val += v
+        result.append(val)
+    return result
+
+
+def cumulative_reverse(numbers):
+    val = 0
+    result = []
+    for v in numbers[::-1]:
+        val += v
+        result = [val] + result
+    return result
