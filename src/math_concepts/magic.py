@@ -1,6 +1,15 @@
+import math
 from math import gcd
 
 import numpy as np
+
+
+def C(n, r):
+    if r == 0:
+        return 1
+    if r > n // 2:
+        return C(n, n - r)
+    return n * C(n - 1, r - 1) // r
 
 
 def reduce_fraction(numerator, denominator):
@@ -98,3 +107,29 @@ def projxS(A, x):
     A = np.array(A)
     x = np.array(x)
     return A @ np.linalg.inv(np.transpose(A) @ A) @ np.transpose(A) @ x
+
+
+def poisson_pmf(lambda_value, x):
+    """
+    Calculate the Poisson PMF.
+
+    Parameters:
+    - lambda_value (float): The expected number of occurrences (λ).
+    - x (int): The actual number of occurrences.
+
+    Returns:
+    - float: The probability of observing x occurrences.
+    """
+    return (lambda_value ** x) * math.exp(-lambda_value) / math.factorial(x)
+
+
+def poisson_range(lambda_value, start, end):
+    result = 0
+    for x in range(start, end + 1):
+        result += poisson_pmf(lambda_value, x)
+    return result
+
+
+# def bernoulli_trial(n, r, p = None, p_not = None):
+#     if
+#     return C(n, r) * p ** r * (p_not) ** (n - r)
