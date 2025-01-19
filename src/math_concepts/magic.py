@@ -130,6 +130,18 @@ def poisson_range(lambda_value, start, end):
     return result
 
 
-# def bernoulli_trial(n, r, p = None, p_not = None):
-#     if
-#     return C(n, r) * p ** r * (p_not) ** (n - r)
+def bernoulli_trial(n, r, p=None, p_not=None):
+    if p is None and p_not is None:
+        raise Exception('Either p or p_not should be defined')
+    if p is None:
+        p = 1 - p_not
+    if p_not is None:
+        p_not = 1 - p
+    return C(n, r) * p ** r * (p_not) ** (n - r)
+
+
+def binomial_distribution(n, start, end, p=None, p_not=None):
+    ans = 0
+    for i in range(start, end + 1):
+        ans += bernoulli_trial(n, i, p, p_not)
+    return ans
