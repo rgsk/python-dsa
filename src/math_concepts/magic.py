@@ -2,6 +2,7 @@ import math
 from math import gcd
 
 import numpy as np
+from sympy import Rational, diff, simplify  # type:ignore
 
 
 def C(n, r):
@@ -104,9 +105,34 @@ def triangle_area(x1, y1, x2, y2, x3, y3):
 
 
 def projxS(A, x):
+    # projection of x on subspace S spanned by linearly independent vectors {a1, a2}
     A = np.array(A)
     x = np.array(x)
     return A @ np.linalg.inv(np.transpose(A) @ A) @ np.transpose(A) @ x
+
+
+def distxS(A, x):
+    x = np.array(x)
+    return np.linalg.norm(np.array(x) - projxS(A, x))
+
+
+def angle(u, v):
+    # find the angle between two vectors u and v
+    u = np.array(u)
+    v = np.array(v)
+    c = np.dot(u, v)/np.linalg.norm(u) / \
+        np.linalg.norm(v)  # -> cosine of the angle
+    return np.degrees(np.arccos(c))
+
+
+def anglexS(A, x):
+    return angle(x, projxS(A, x))
+
+
+def least_squares_solution(A, b):
+    A = np.array(A)
+    b = np.array(b)
+    return np.linalg.inv(np.transpose(A) @ A) @ np.transpose(A) @ b
 
 
 def poisson_pmf(lambda_value, x):
@@ -145,3 +171,71 @@ def binomial_distribution(n, start, end, p=None, p_not=None):
     for i in range(start, end + 1):
         ans += bernoulli_trial(n, i, p, p_not)
     return ans
+
+
+def convert_to_rational(expr):
+    """
+    Converts all numerical coefficients in a SymPy expression to rational numbers.
+
+    Parameters:
+        expr: sympy.Expr
+            The input expression.
+
+    Returns:
+        sympy.Expr
+            The expression with all numerical coefficients as Rational numbers.
+    """
+    if expr.is_Atom:  # Base case: if it's a single term
+        if expr.is_Number:
+            return Rational(expr)
+        return expr
+
+    if expr.is_Add or expr.is_Mul:  # If it's an addition or multiplication
+        return expr.func(*[convert_to_rational(arg) for arg in expr.args])
+
+    if expr.is_Pow:  # If it's a power
+        base, exp = expr.args
+        return base**convert_to_rational(exp)
+
+    return expr  # Default case: return as is
+
+
+def quadratic_taylor_multivariable(f, vars, point):
+    """
+    Compute the quadratic Taylor expansion of a multivariable function 
+    at a given point.
+
+    Parameters:
+    - f:      The sympy expression representing the function.
+    - vars:   A list of sympy symbols [x1, x2, ..., xn].
+    - point:  A dict {x1: a1, x2: a2, ...} giving the expansion point.
+
+    Returns:
+    - The quadratic Taylor expansion of f about 'point', simplified.
+    """
+
+    # 0th-order term:  f(a)
+    taylor = f.subs(point)
+
+    # 1st-order terms:  sum of df/dx_i (a) * (x_i - a_i)
+    for v in vars:
+        df_dv = diff(f, v)
+        taylor += df_dv.subs(point) * (v - point[v])
+
+    # 2nd-order terms:
+    #    1/2 \sum_{i,j} f_{i j}(a) * (x_i - a_i)(x_j - a_j)
+    # A common way to avoid double counting is to loop i <= j:
+    n = len(vars)
+    for i in range(n):
+        for j in range(i, n):
+            d2 = diff(f, vars[i], vars[j]).subs(point)
+            if i == j:
+                # pure second derivative terms get a 1/2 factor
+                taylor += d2 * (vars[i] - point[vars[i]])**2 / 2
+            else:
+                # cross terms appear once, but with no 1/2
+                # (because f_{xy} = f_{yx} for sufficiently smooth f)
+                taylor += d2 * (vars[i] - point[vars[i]]) * \
+                    (vars[j] - point[vars[j]])
+
+    return convert_to_rational(simplify(taylor))
