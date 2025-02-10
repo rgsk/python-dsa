@@ -173,6 +173,27 @@ def binomial_distribution(n, start, end, p=None, p_not=None):
     return ans
 
 
+def geometric_pmf(p, x):
+    """
+    Calculate the Geometric PMF.
+
+    Parameters:
+    - p (float): The probability of success in a single trial.
+    - x (int): The number of trials until the first success.
+
+    Returns:
+    - float: The probability of observing x trials until the first success.
+    """
+    return p * (1 - p) ** (x - 1)
+
+
+def geometric_distribution(p, start, end):
+    result = 0
+    for x in range(start, end + 1):
+        result += geometric_pmf(p, x)
+    return result
+
+
 def convert_to_rational(expr):
     """
     Converts all numerical coefficients in a SymPy expression to rational numbers.
