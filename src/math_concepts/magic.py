@@ -1,6 +1,7 @@
 import math
 from math import gcd
 
+import matplotlib.pyplot as plt
 import numpy as np
 from sympy import Rational, diff, simplify  # type:ignore
 
@@ -260,3 +261,41 @@ def quadratic_taylor_multivariable(f, vars, point):
                     (vars[j] - point[vars[j]])
 
     return convert_to_rational(simplify(taylor))
+
+
+def plot_function(func, x_range=(-10, 10), num_points=1000, asymptotes=None, ylim=(-10, 10)):
+    """
+    Plots an arbitrary function with optional vertical asymptotes.
+
+    Parameters:
+    - func: The function to be plotted (should take a numpy array as input).
+    - x_range: Tuple specifying the range of x values (default: (-10, 10)).
+    - num_points: Number of points to generate for smooth plotting (default: 1000).
+    - asymptotes: List of x-values where vertical asymptotes occur (default: None).
+    - ylim: Tuple specifying the y-axis limits to control the view.
+    """
+    x = np.linspace(x_range[0], x_range[1], num_points)
+    if asymptotes:
+        for a in asymptotes:
+            # Remove points near asymptotes to avoid discontinuities
+            x = x[np.abs(x - a) > 0.05]
+
+    y = func(x)
+
+    plt.figure(figsize=(8, 6))
+    plt.plot(x, y, label="Function Graph", color='b')
+
+    if asymptotes:
+        for a in asymptotes:
+            plt.axvline(x=a, color='r', linestyle='dashed',
+                        label=f'Asymptote at x={a}')
+
+    plt.axhline(y=0, color='black', linewidth=1)
+    plt.ylim(ylim)
+    plt.xlim(x_range)
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title('Graph of the Given Function')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
