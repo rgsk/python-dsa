@@ -263,6 +263,17 @@ def quadratic_taylor_multivariable(f, vars, point):
     return convert_to_rational(simplify(taylor))
 
 
+def generate_factors(n: int):
+    lf = []
+    rf = []
+    for i in range(1, math.floor(math.sqrt(n)) + 1):
+        if n % i == 0:
+            lf.append(i)
+            if i * i != n:
+                rf.append(n // i)
+    return lf + rf[::-1]
+
+
 def plot_function(func, x_range=(-10, 10), num_points=1000, asymptotes=None, ylim=(-10, 10)):
     """
     Plots an arbitrary function with optional vertical asymptotes.
