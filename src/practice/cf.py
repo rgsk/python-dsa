@@ -46,24 +46,44 @@ def setup(func):
                 # Compare files and print result to real console
                 try:
                     with open(output_file_path, 'r', encoding='utf-8') as f_out:
-                        out_content = f_out.read().rstrip()
+                        out_raw = f_out.read()
                     with open(correct_output_file_path, 'r', encoding='utf-8') as f_correct:
-                        correct_content = f_correct.read().rstrip()
+                        cor_raw = f_correct.read()
+
+                    def normalize(s: str) -> str:
+                        # remove BOM, unify newlines, strip ends, collapse internal whitespace per line
+                        s = s.lstrip('\ufeff').replace('\r\n', '\n').replace('\r', '\n').strip()
+                        return '\n'.join(' '.join(line.split()) for line in s.splitlines())
+
+                    out_norm = normalize(out_raw)
+                    cor_norm = normalize(cor_raw)
 
                     sys.stdout = _original_stdout  # restore console output
 
-                    if out_content == correct_content:
+                    if out_norm == cor_norm:
                         print("OK: output.txt matches correct_output.txt")
                     else:
                         print("MISMATCH: output.txt differs from correct_output.txt")
-                        out_lines = out_content.splitlines()
-                        cor_lines = correct_content.splitlines()
+
+                        # Show first differing line (normalized) and also raw reprs for visibility
+                        out_lines_raw = out_raw.replace('\r\n','\n').replace('\r','\n').splitlines()
+                        cor_lines_raw = cor_raw.replace('\r\n','\n').replace('\r','\n').splitlines()
+                        out_lines = out_norm.splitlines()
+                        cor_lines = cor_norm.splitlines()
                         max_lines = max(len(out_lines), len(cor_lines))
                         for i in range(max_lines):
                             o = out_lines[i] if i < len(out_lines) else "<missing>"
                             c = cor_lines[i] if i < len(cor_lines) else "<missing>"
                             if o != c:
-                                print(f"  Line {i+1}:\n    output : {o}\n    correct: {c}")
+                                print(f"  Line {i+1}:")
+                                print(f"    output : {o}")
+                                print(f"    correct: {c}")
+                                # Also show the raw strings to expose hidden chars
+                                # o_raw = out_lines_raw[i] if i < len(out_lines_raw) else "<missing>"
+                                # c_raw = cor_lines_raw[i] if i < len(cor_lines_raw) else "<missing>"
+                                # print("  Raw (repr) for that line:")
+                                # print(f"    output : {repr(o_raw)}")
+                                # print(f"    correct: {repr(c_raw)}")
                                 break
                 except FileNotFoundError as e:
                     sys.stdout = _original_stdout
@@ -83,19 +103,17 @@ def main():
             n, k = [int(v) for v in input().split()]
             a = [int(v) for v in input().split()]
 
-            def getForD(d):
-                min_ops = float('inf')
-                for i in range(n):
-                    rem = a[i] % d
-                    min_ops = min(min_ops, 0 if rem == 0 else d - rem)
-                return min_ops
-
-            if k == 4:
-                count_even = sum(1 for v in a if v % 2 == 0)
-                return min(getForD(k), max(0, 2 - count_even))
-            else:
-                return getForD(k)
-
+            for i in range(n):
+                if a[i] % k == 0:
+                    a[i] = k
+                else:
+                    a[i] = a[i] % k
+            items = []
+            for i in range(n):
+                items.append([a[i], i])
+            items.sort(key=lambda x: -x[0])
+            order = [str(i + 1) for v, i in items]
+            return " ".join(order)
         print(solve())
 
 main()
