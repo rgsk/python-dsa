@@ -113,13 +113,13 @@ def setup(func):
 @setup
 def main():
     n = ii()
-    while n != 1:
-        print(n, end=" ")
-        if n % 2:
-            n = n * 3 + 1
-        else:
-            n //= 2
-    print(1)
+    arr = li()
+    m = 0
+    for i in range(1, n + 1):
+        m ^= i
+    for v in arr:
+        m ^= v
+    print(m)
 
 
 main()
