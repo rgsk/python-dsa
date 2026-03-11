@@ -1,5 +1,5 @@
 from bisect import bisect_left, bisect_right
-from collections import Counter
+from collections import Counter, defaultdict
 from typing import Any, List, Tuple
 
 
@@ -23,18 +23,11 @@ def main():
     def solve():
         n, x = li()
         values = li()
-        enumerated = [(v, i) for i, v in enumerate(values)]
-        enumerated.sort()
-        l = 0
-        r = n - 1
-        while l < r:
-            total = enumerated[l][0] + enumerated[r][0]
-            if total == x:
-                return f'{enumerated[l][1] + 1} {enumerated[r][1] + 1}'
-            elif total < x:
-                l += 1
-            else:
-                r -= 1
+        mp = defaultdict(int)
+        for i in range(n):
+            if x - values[i] in mp:
+                return f'{mp[x - values[i]] + 1} {i + 1}'
+            mp[values[i]] = i
         return 'IMPOSSIBLE'
     print(solve())
 

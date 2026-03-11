@@ -6,21 +6,17 @@ int main() {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 #endif
-    int n;
-    cin >> n;
-    vector<pair<int, int>> events;
+    int n, x;
+    cin >> n >> x;
+    map<int, int> mp;
     for (int i = 0; i < n; i++) {
-        int a, l;
-        cin >> a >> l;
-        events.push_back({a, 1});
-        events.push_back({l, -1});
+        int v;
+        cin >> v;
+        if (mp.find(x - v) != mp.end()) {
+            cout << mp[x - v] + 1 << " " << i + 1 << endl;
+            return 0;
+        }
+        mp[v] = i;
     }
-    sort(events.begin(), events.end());
-    int occupied = 0;
-    int max_occupied = 0;
-    for (int i = 0; i < 2 * n; i++) {
-        occupied += events[i].second;
-        max_occupied = max(max_occupied, occupied);
-    }
-    cout << max_occupied << endl;
+    cout << "IMPOSSIBLE" << endl;
 }
