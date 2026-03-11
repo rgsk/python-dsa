@@ -1,5 +1,12 @@
 # export ONLINE_JUDGE=true
 
+def ii():
+    return int(input())
+
+
+def li():
+    return list(map(int, input().split()))
+
 
 def setup(func):
     """
@@ -104,8 +111,8 @@ def setup(func):
 
 
 @setup
-def solve():
-    n = int(input())
+def main():
+    n = ii()
     while n != 1:
         print(n, end=" ")
         if n % 2:
@@ -115,4 +122,4 @@ def solve():
     print(1)
 
 
-solve()
+main()
