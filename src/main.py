@@ -20,18 +20,23 @@ def setup(fn):
 
 @setup
 def main():
-    n = ii()
-    movies: List[List[int]] = []
-    for _ in range(n):
-        movies.append(li())
-    movies.sort(key=lambda x: x[1])
-    last_end = movies[0][1]
-    count = 1
-    for i in range(1, n):
-        if movies[i][0] >= last_end:
-            count += 1
-            last_end = movies[i][1]
-    print(count)
+    def solve():
+        n, x = li()
+        values = li()
+        enumerated = [(v, i) for i, v in enumerate(values)]
+        enumerated.sort()
+        l = 0
+        r = n - 1
+        while l < r:
+            total = enumerated[l][0] + enumerated[r][0]
+            if total == x:
+                return f'{enumerated[l][1] + 1} {enumerated[r][1] + 1}'
+            elif total < x:
+                l += 1
+            else:
+                r -= 1
+        return 'IMPOSSIBLE'
+    print(solve())
 
 
 if __name__ == "__main__":
