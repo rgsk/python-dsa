@@ -112,17 +112,35 @@ def setup(func):
 
 @setup
 def main():
-    n = int(input())
-    if n == 1:
-        print(1)
-    elif n <= 3:
-        print('NO SOLUTION')
-    else:
-        for v in range(2, n + 1, 2):
-            print(v, end=' ')
-        for v in range(1, n + 1, 2):
-            print(v, end=' ')
-        print()
+    board = []
+    for _ in range(8):
+        board.append([v for v in input()])
+
+    def is_safe(r, c):
+        for i in range(r + 1):
+            if board[r-i][c] == 'Q':
+                return False
+            if c-i >= 0 and board[r-i][c-i] == 'Q':
+                return False
+            if c+i < 8 and board[r-i][c+i] == 'Q':
+                return False
+        return True
+
+    count = 0
+
+    def helper(r):
+        nonlocal count
+        if r == 8:
+            count += 1
+            return
+        for c in range(8):
+            if is_safe(r, c) and board[r][c] != '*':
+                board[r][c] = 'Q'
+                helper(r + 1)
+                board[r][c] = '.'
+
+    helper(0)
+    print(count)
 
 
 main()
