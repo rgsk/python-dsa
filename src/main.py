@@ -1,5 +1,5 @@
+from bisect import bisect_left, bisect_right
 from collections import Counter
-from typing import Any, List
 
 
 def ii():
@@ -19,22 +19,34 @@ def setup(fn):
 
 @setup
 def main():
-    n, x = li()
-    weights = li()
-    weights.sort()
-    gondolas = 0
-    l = 0
-    r = n - 1
-    while l <= r:
-        if l == r:
-            l += 1
-        elif weights[l] + weights[r] <= x:
-            l += 1
-            r -= 1
-        else:
-            r -= 1
-        gondolas += 1
-    print(gondolas)
+    n, m = li()
+    tickets = li()
+    customers = li()
+
+    counts = Counter(tickets)
+    values = sorted(counts)
+    parent = list(range(len(values)))
+
+    def find(x):
+        if x < 0:
+            return -1
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+
+    for max_price in customers:
+        i = bisect_right(values, max_price) - 1
+        i = find(i)
+
+        if i == -1:
+            print(-1)
+            continue
+
+        price = values[i]
+        print(price)
+        counts[price] -= 1
+        if counts[price] == 0:
+            parent[i] = find(i - 1)
 
 
 if __name__ == "__main__":
