@@ -21,17 +21,17 @@ def setup(fn):
 @setup
 def main():
     n = ii()
-    events: List[List[int]] = []
+    movies: List[List[int]] = []
     for _ in range(n):
-        a, l = li()
-        events.append([a, 1])
-        events.append([l, -1])
-    events.sort()
-    occupied = max_occupied = 0
-    for _, delta in events:
-        occupied += delta
-        max_occupied = max(max_occupied, occupied)
-    print(max_occupied)
+        movies.append(li())
+    movies.sort(key=lambda x: x[1])
+    last_end = movies[0][1]
+    count = 1
+    for i in range(1, n):
+        if movies[i][0] >= last_end:
+            count += 1
+            last_end = movies[i][1]
+    print(count)
 
 
 if __name__ == "__main__":
