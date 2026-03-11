@@ -19,14 +19,25 @@ def setup(fn):
 
 @setup
 def main():
-    n = ii()
-    arr = li()
-    arr.sort()
-    distinct = 1
-    for i in range(1, n):
-        if arr[i] != arr[i-1]:
-            distinct += 1
-    print(distinct)
+    n, m, k = li()
+    applicants = li()
+    apartments = li()
+    applicants.sort()
+    apartments.sort()
+    i = 0
+    j = 0
+    matches = 0
+    while i < n and j < m:
+        if apartments[j] < applicants[i] - k:
+            j += 1
+        elif apartments[j] > applicants[i] + k:
+            i += 1
+        else:
+            matches += 1
+            i += 1
+            j += 1
+
+    print(matches)
 
 
 if __name__ == "__main__":
