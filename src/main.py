@@ -1,4 +1,5 @@
 from collections import Counter
+from typing import List
 
 
 def ii():
@@ -43,4 +44,5 @@ def main():
 
 
 if __name__ == "__main__":
+    main()
     main()
