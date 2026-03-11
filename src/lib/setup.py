@@ -18,11 +18,3 @@ def setup(func):
             builtins.input = old_input
 
     return wrapper
-
-
-def ii():
-    return int(input())
-
-
-def li():
-    return list(map(int, input().split()))
