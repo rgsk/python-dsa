@@ -112,12 +112,19 @@ def setup(func):
 
 @setup
 def main():
-    n = ii()
-    arr = li()
-    expected = n * (n + 1) // 2
-    total = sum(arr)
-    missing = expected - total
-    print(missing)
+    s = input()
+    cur = s[0]
+    count = 1
+    max_count = 1
+    for i in range(1, len(s)):
+        if cur == s[i]:
+            count += 1
+        else:
+            max_count = max(max_count, count)
+            cur = s[i]
+            count = 1
+    max_count = max(max_count, count)
+    print(max_count)
 
 
 main()
