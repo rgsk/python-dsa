@@ -112,19 +112,14 @@ def setup(func):
 
 @setup
 def main():
-    s = input()
-    cur = s[0]
-    count = 1
-    max_count = 1
-    for i in range(1, len(s)):
-        if cur == s[i]:
-            count += 1
-        else:
-            max_count = max(max_count, count)
-            cur = s[i]
-            count = 1
-    max_count = max(max_count, count)
-    print(max_count)
+    n = ii()
+    arr = li()
+    moves = 0
+    for i in range(1, n):
+        if arr[i] < arr[i-1]:
+            moves += arr[i-1] - arr[i]
+            arr[i] = arr[i-1]
+    print(moves)
 
 
 main()
