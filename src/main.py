@@ -1,5 +1,8 @@
 # export ONLINE_JUDGE=true
 
+from typing import Counter
+
+
 def ii():
     return int(input())
 
@@ -112,13 +115,28 @@ def setup(func):
 
 @setup
 def main():
-    t = ii()
-    for _ in range(t):
-        a, b = li()
-        if (a + b) % 3 == 0 and max(a, b) <= 2 * min(a, b):
-            print("YES")
-        else:
-            print("NO")
+    s = input().strip()
+    freq = Counter(s)
+
+    odd_chars = [ch for ch, cnt in freq.items() if cnt % 2 == 1]
+
+    if len(odd_chars) > 1:
+        print("NO SOLUTION")
+    else:
+        left = []
+        mid = ""
+
+        for ch in sorted(freq.keys()):
+            cnt = freq[ch]
+            if cnt % 2 == 1:
+                mid = ch * cnt
+            else:
+                left.append(ch * (cnt // 2))
+
+        left = "".join(left)
+        right = left[::-1]
+
+        print(left + mid + right)
 
 
 main()
