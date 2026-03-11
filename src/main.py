@@ -110,17 +110,15 @@ def setup(func):
     return wrapper
 
 
-mod = 1000000007
-
-
 @setup
 def main():
     n = ii()
-    ans = 1
-    for _ in range(n):
-        ans *= 2
-        ans %= mod
-    print(ans)
+    count = 0
+    i = 5
+    while n // i > 0:
+        count += n // i
+        i *= 5
+    print(count)
 
 
 main()
