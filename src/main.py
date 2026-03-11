@@ -114,12 +114,10 @@ def setup(func):
 def main():
     n = ii()
     arr = li()
-    m = 0
-    for i in range(1, n + 1):
-        m ^= i
-    for v in arr:
-        m ^= v
-    print(m)
+    expected = n * (n + 1) // 2
+    total = sum(arr)
+    missing = expected - total
+    print(missing)
 
 
 main()
