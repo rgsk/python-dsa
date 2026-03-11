@@ -18,14 +18,18 @@ def setup(fn):
 
 @setup
 def main():
-    n = int(input())
-    while n != 1:
-        print(n, end=" ")
-        if n % 2:
-            n = n * 3 + 1
-        else:
-            n //= 2
-    print(1)
+    n, t = li()
+    s = [v for v in input()]
+    while t > 0:
+        i = 0
+        while i < n - 1:
+            if s[i] == 'B' and s[i+1] == 'G':
+                s[i], s[i+1] = s[i+1], s[i]
+                i += 2
+            else:
+                i += 1
+        t -= 1
+    print("".join(s))
 
 
 main()
