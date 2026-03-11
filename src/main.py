@@ -1,5 +1,6 @@
 from bisect import bisect_left, bisect_right
 from collections import Counter
+from typing import Any, List, Tuple
 
 
 def ii():
@@ -19,34 +20,18 @@ def setup(fn):
 
 @setup
 def main():
-    n, m = li()
-    tickets = li()
-    customers = li()
-
-    counts = Counter(tickets)
-    values = sorted(counts)
-    parent = list(range(len(values)))
-
-    def find(x):
-        if x < 0:
-            return -1
-        if parent[x] != x:
-            parent[x] = find(parent[x])
-        return parent[x]
-
-    for max_price in customers:
-        i = bisect_right(values, max_price) - 1
-        i = find(i)
-
-        if i == -1:
-            print(-1)
-            continue
-
-        price = values[i]
-        print(price)
-        counts[price] -= 1
-        if counts[price] == 0:
-            parent[i] = find(i - 1)
+    n = ii()
+    events: List[List[int]] = []
+    for _ in range(n):
+        a, l = li()
+        events.append([a, 1])
+        events.append([l, -1])
+    events.sort()
+    occupied = max_occupied = 0
+    for _, delta in events:
+        occupied += delta
+        max_occupied = max(max_occupied, occupied)
+    print(max_occupied)
 
 
 if __name__ == "__main__":
