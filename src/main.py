@@ -1,12 +1,5 @@
 # export ONLINE_JUDGE=true
 
-import math
-from collections import Counter
-
-
-def yes_no(v: bool):
-    return 'YES' if v else 'NO'
-
 
 def setup(func):
     """
@@ -111,7 +104,7 @@ def setup(func):
 
 
 @setup
-def main():
+def solve():
     n = int(input())
     while n != 1:
         print(n, end=" ")
@@ -122,4 +115,4 @@ def main():
     print(1)
 
 
-main()
+solve()
