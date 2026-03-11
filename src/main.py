@@ -18,18 +18,28 @@ def setup(fn):
 
 @setup
 def main():
-    n, t = li()
-    s = [v for v in input()]
-    while t > 0:
-        i = 0
-        while i < n - 1:
-            if s[i] == 'B' and s[i+1] == 'G':
-                s[i], s[i+1] = s[i+1], s[i]
-                i += 2
+    arr = []
+    for _ in range(3):
+        arr.append(li())
+    clone = [row[:] for row in arr]
+    for i in range(3):
+        for j in range(3):
+            for di, dj in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
+                ni = i + di
+                nj = j + dj
+                if 0 <= ni < 3 and 0 <= nj < 3:
+                    clone[ni][nj] += arr[i][j]
+
+    for i in range(3):
+        for j in range(3):
+            if clone[i][j] % 2:
+                arr[i][j] = 0
             else:
-                i += 1
-        t -= 1
-    print("".join(s))
+                arr[i][j] = 1
+    for i in range(3):
+        for j in range(3):
+            print(arr[i][j], end='')
+        print()
 
 
 if __name__ == "__main__":
