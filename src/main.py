@@ -112,13 +112,13 @@ def setup(func):
 
 @setup
 def main():
-    n = ii()
-    count = 0
-    i = 5
-    while n // i > 0:
-        count += n // i
-        i *= 5
-    print(count)
+    t = ii()
+    for _ in range(t):
+        a, b = li()
+        if (a + b) % 3 == 0 and max(a, b) <= 2 * min(a, b):
+            print("YES")
+        else:
+            print("NO")
 
 
 main()
