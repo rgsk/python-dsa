@@ -1,7 +1,16 @@
 from bisect import bisect_left, bisect_right
-from collections import Counter, defaultdict
-from functools import cmp_to_key
-from typing import Any, List, Tuple
+from collections import Counter, defaultdict, deque
+from functools import cache, cmp_to_key
+from heapq import heapify, heappop, heappush
+from math import gcd
+from typing import Any, List, Optional, Tuple
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 
 def ii():
